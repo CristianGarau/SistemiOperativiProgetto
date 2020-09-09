@@ -11,7 +11,7 @@ public class MainClass {
 			}
 			System.out.println("Fine Riga numero " + i);
 		}
-		//Provo a impostare il primo pixel al colore rosso
+		//Provo a impostare il primo pixel al colore verde
 		img.setPixel(0, 0, new Pixel(0,255,0,255));
 		img.saveImage();
 	}
