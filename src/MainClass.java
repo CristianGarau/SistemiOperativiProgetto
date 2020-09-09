@@ -3,6 +3,8 @@ public class MainClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		int x = 0;
+		int y = 0;
 		ImageManipulator img = new ImageManipulator("src/input.png");
 		
 		for(int i = 0; i<img.getWidth(); i++) {
@@ -11,9 +13,15 @@ public class MainClass {
 			}
 			System.out.println("Fine Riga numero " + i);
 		}
-		//Provo a impostare il primo pixel al colore verde
-		img.setPixel(0, 0, new Pixel(0,255,0,255));
+		//Provo a impostare il primo pixel al colore rosso
+		img.setPixel(x, y, new Pixel(255,0, 0));
 		img.saveImage();
+		
+		//Testo come nascondere 4 bit nel primo pixel
+		int[] toHide = {1, 1, 1};
+		System.out.println("Valore prima: " + img.getPixel(x, y));
+		img.hide(x, y, toHide);
+		System.out.println("Valore dopo: " + img.getPixel(x, y));
 	}
 
 }

@@ -1,20 +1,20 @@
 
 public class Pixel {
-	private int red, green, blue, alpha;
+	private int alpha, red, green, blue;
 	
 	public Pixel() {
 		
 	}
 	
-	public Pixel(int red, int green, int blue, int alpha) {
+	public Pixel(int red, int green, int blue) {
+		this.alpha = 255;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-		this.alpha = alpha;
 	}
 
 	public String toString() {
-		return "R: " + red + " - G: " + green + " - B: " + blue + " - A: " + alpha;
+		return "R: " + red + " - G: " + green + " - B: " + blue;
 	}
 	
 	public int getRed() {
