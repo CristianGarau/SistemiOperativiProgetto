@@ -10,8 +10,10 @@ public class ImageManipulator {
 	File f;
 	private int width;
 	private int height;
+	private String outputFilePath;
 
 	public ImageManipulator(String filePath) {
+		outputFilePath = "src/output.png";
 		try {
 			f = new File(filePath);
 			img = ImageIO.read(f);
@@ -29,6 +31,21 @@ public class ImageManipulator {
 		int blue = (pixelData) & 0xff;
 		int alpha = (pixelData >> 24) & 0xff;
 		return new Pixel(red, green, blue, alpha);
+	}
+
+	public void setPixel(int x, int y, Pixel pixel) {
+		int pixelData = (pixel.getAlpha()<<24) | (pixel.getRed()<<16) | 
+						(pixel.getGreen()<<8) | pixel.getBlue();
+		img.setRGB(x, y, pixelData);
+	}
+	
+	public void saveImage() {
+		try {
+			ImageIO.write(img, "png", new File(outputFilePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public BufferedImage getImg() {
