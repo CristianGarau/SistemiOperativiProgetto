@@ -27,11 +27,12 @@ public class ImageManipulator {
 	public Pixel getPixel(int x, int y) {
 		int pixelData = img.getRGB(x, y);
 		
+		int alpha = (pixelData >> 24) & 0xff;
 		int red = (pixelData >> 16) & 0xff;
 		int green = (pixelData >> 8) & 0xff;
 		int blue = (pixelData) & 0xff;
 		
-		return new Pixel(red, green, blue);
+		return new Pixel(alpha, red, green, blue);
 	}
 
 	public void setPixel(int x, int y, Pixel pixel) {
@@ -43,26 +44,33 @@ public class ImageManipulator {
 	
 	public void hide(int x, int y, int toHide[]) {
 		/*
-		posso nascondere 3 bit ogni pixel
-		0 = red
-		1 = green
-		2 = blue
+		posso nascondere 4 bit ogni pixel
+		0 = alpha
+		1 = red
+		2 = green
+		3 = blue
 		*/
 		Pixel pixel = getPixel(x, y);
 		
 		if(toHide[0] == 0) {
+			pixel.setAlpha(pixel.getAlpha() & ~(1 << 0));
+		}else {
+			pixel.setAlpha(pixel.getAlpha() | (1 << 0));
+		}
+		
+		if(toHide[1] == 0) {
 			pixel.setRed(pixel.getRed() & ~(1 << 0));
 		}else {
 			pixel.setRed(pixel.getRed() | (1 << 0));
 		}
 		
-		if(toHide[1] == 0) {
+		if(toHide[2] == 0) {
 			pixel.setGreen(pixel.getGreen() & ~(1 << 0));
 		}else {
 			pixel.setGreen(pixel.getGreen() | (1 << 0));
 		}
 		
-		if(toHide[2] == 0) {
+		if(toHide[3] == 0) {
 			pixel.setBlue(pixel.getBlue() & ~(1 << 0));
 		}else {
 			pixel.setBlue(pixel.getBlue() | (1 << 0));

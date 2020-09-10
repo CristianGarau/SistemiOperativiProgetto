@@ -6,15 +6,15 @@ public class Pixel {
 		
 	}
 	
-	public Pixel(int red, int green, int blue) {
-		this.alpha = 255;
+	public Pixel(int alpha, int red, int green, int blue) {
+		this.alpha = alpha;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
 	}
 
 	public String toString() {
-		return "R: " + red + " - G: " + green + " - B: " + blue;
+		return "A: " + alpha + " - R: " + red + " - G: " + green + " - B: " + blue;
 	}
 	
 	public int getRed() {

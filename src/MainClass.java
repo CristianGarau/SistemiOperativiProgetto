@@ -14,14 +14,15 @@ public class MainClass {
 			System.out.println("Fine Riga numero " + i);
 		}
 		//Provo a impostare il primo pixel al colore rosso
-		img.setPixel(x, y, new Pixel(255,0, 0));
+		img.setPixel(x, y, new Pixel(100, 255,0, 0));
 		img.saveImage();
 		
 		//Testo come nascondere 4 bit nel primo pixel
-		int[] toHide = {1, 1, 1};
+		int[] toHide = {0, 0, 0, 0};
 		System.out.println("Valore prima: " + img.getPixel(x, y));
 		img.hide(x, y, toHide);
 		System.out.println("Valore dopo: " + img.getPixel(x, y));
+		img.saveImage();
 	}
 
 }
