@@ -6,7 +6,7 @@ public class MainClass {
 		int x = 0;
 		int y = 0;
 		ImageManipulator img = new ImageManipulator("src/input.png");
-		
+		/*
 		for(int i = 0; i<img.getWidth(); i++) {
 			for(int j=0; j<img.getHeight(); j++) {
 				System.out.println(img.getPixel(j, i).toString());
@@ -23,6 +23,10 @@ public class MainClass {
 		img.hide(x, y, toHide);
 		System.out.println("Valore dopo: " + img.getPixel(x, y));
 		img.saveImage();
+		*/
+		img.encryptImage();
+
+		img.decrpytImage();
 	}
 
 }

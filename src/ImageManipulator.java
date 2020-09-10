@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -26,6 +27,17 @@ public class ImageManipulator {
 
 	public Pixel getPixel(int x, int y) {
 		int pixelData = img.getRGB(x, y);
+		
+		int alpha = (pixelData >> 24) & 0xff;
+		int red = (pixelData >> 16) & 0xff;
+		int green = (pixelData >> 8) & 0xff;
+		int blue = (pixelData) & 0xff;
+		
+		return new Pixel(alpha, red, green, blue);
+	}
+	
+	public Pixel getPixel(int x, int y, BufferedImage image) {
+		int pixelData = image.getRGB(x, y);
 		
 		int alpha = (pixelData >> 24) & 0xff;
 		int red = (pixelData >> 16) & 0xff;
@@ -79,6 +91,16 @@ public class ImageManipulator {
 		setPixel(x, y, pixel);
 	}
 	
+	public int decryptPixel(int x, int y, BufferedImage image){
+		Pixel pixel = getPixel(x, y, image);
+		int bitA = pixel.getAlpha() & 1;
+		int bitR = pixel.getRed() & 1;
+		int bitG = pixel.getGreen() & 1;
+		int bitB = pixel.getBlue() & 1;
+		
+		return (bitA) | (bitR<<1) | (bitG<<2) | (bitB<<3);
+	}
+	
 	public void saveImage() {
 		try {
 			ImageIO.write(img, "png", new File(outputFilePath));
@@ -88,6 +110,65 @@ public class ImageManipulator {
 		}
 	}
 
+	public int[] intToArray(int input) {
+		//Uso questa funzione per comodità per convertire
+		//un numero in un array di 4 bit
+		
+	    int[] bits = new int[4];
+	    for (int i = 3; i >= 0; i--) {
+	        if((input & (1 << i)) != 0){
+	        	bits[i] = 1;
+	        }else {
+	        	bits[i] = 0;
+	        }
+	    }
+
+		return bits;
+		
+	}
+	
+	public void encryptImage() {
+		BufferedImage toEncrypt = null;
+		try {
+			toEncrypt = ImageIO.read(new File("src/toEncrypt.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		//uso i primi 6 pixel per salvare i valori di width e height
+		int width = toEncrypt.getWidth();
+		int height = toEncrypt.getHeight();
+
+		this.hide(0, 0, intToArray(width));
+		this.hide(1, 0, intToArray(width>>4));
+		this.hide(2, 0, intToArray(width>>8));
+		this.hide(3, 0, intToArray(height));
+		this.hide(4, 0, intToArray(height>>4));
+		this.hide(5, 0, intToArray(height>>8));
+		
+		try {
+			ImageIO.write(img, "png", new File(outputFilePath));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void decrpytImage() {
+		BufferedImage toDecrypt = null;
+		try {
+			toDecrypt = ImageIO.read(new File("src/output.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int width, height;
+		
+		width = decryptPixel(0, 0, toDecrypt) | decryptPixel(1, 0, toDecrypt)<<4 | decryptPixel(2, 0, toDecrypt)<<8;
+		height = decryptPixel(3, 0, toDecrypt) | (decryptPixel(4, 0, toDecrypt)<<4) | (decryptPixel(5, 0, toDecrypt)<<8);
+	}
+	
 	public BufferedImage getImg() {
 		return img;
 	}
