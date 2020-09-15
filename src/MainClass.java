@@ -26,7 +26,7 @@ public class MainClass {
 		*/
 		img.encryptImage();
 
-		img.decrpytImage();
+		img.decryptImage();
 	}
 
 }
