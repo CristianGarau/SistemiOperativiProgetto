@@ -26,7 +26,6 @@ public class FileHandler {
 		StringBuilder strBulder = new StringBuilder();
 
 		try {
-			int lineCounter = 0;
 			buffReader = new BufferedReader(new FileReader(path));
 			String temp = null;
 			while ((temp = buffReader.readLine()) != null ) {
