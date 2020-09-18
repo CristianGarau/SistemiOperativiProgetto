@@ -28,7 +28,7 @@ public class Image {
 		}
 	}
 	
-	public Pixel getPixel(int x, int y) {
+	private Pixel getPixel(int x, int y) {
 		int pixelData = img.getRGB(x, y);
 
 		int alpha = (pixelData >> 24) & 0xff;
