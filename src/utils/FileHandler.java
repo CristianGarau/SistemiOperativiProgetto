@@ -26,13 +26,19 @@ public class FileHandler {
 		StringBuilder strBulder = new StringBuilder();
 
 		try {
-			int newLineCounter = 0;
+			int lineCounter = 0;
 			buffReader = new BufferedReader(new FileReader(path));
 			String temp = null;
 			while ((temp = buffReader.readLine()) != null ) {
 				//TODO aggiungere algo per le andate a capo
-				strBulder.append(temp);
-				
+				/*
+				if(lineCounter == 3) {
+					strBulder.append("\n");
+					lineCounter = 0;
+				}
+				*/
+				strBulder.append(temp + "\n");
+				//lineCounter++;
 			}
 			res = strBulder.toString();
 
