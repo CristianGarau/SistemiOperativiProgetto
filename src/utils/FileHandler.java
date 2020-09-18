@@ -30,15 +30,8 @@ public class FileHandler {
 			buffReader = new BufferedReader(new FileReader(path));
 			String temp = null;
 			while ((temp = buffReader.readLine()) != null ) {
-				//TODO aggiungere algo per le andate a capo
-				/*
-				if(lineCounter == 3) {
-					strBulder.append("\n");
-					lineCounter = 0;
-				}
-				*/
 				strBulder.append(temp + "\n");
-				//lineCounter++;
+
 			}
 			res = strBulder.toString();
 
