@@ -31,13 +31,12 @@ public class Image {
 		}
 	}
 
-	// Restituisce un pixel dell'immagine, sottoforma di oggetto Pixel
-	public Pixel getPixel(int x, int y) {
-
+	//Restituisce un pixel dell'immagine, sottoforma di oggetto Pixel
+	private Pixel getPixel(int x, int y) {
+		
 		int pixelData = img.getRGB(x, y);
 
-		// pixelData è un int, faccio delle traslazioni bitwise e ottengo i valori
-		// singoli
+		//pixelData è un int, faccio delle traslazioni bitwise e ottengo i valori singoli
 		int alpha = (pixelData >> 24) & 0xff;
 		int red = (pixelData >> 16) & 0xff;
 		int green = (pixelData >> 8) & 0xff;
@@ -48,9 +47,9 @@ public class Image {
 		return p;
 	}
 
-	// Prendo i pixel dell'immagine e li metto dentro una lista
-	public ArrayList<Pixel> getPixelList() {
-		ArrayList<Pixel> list = new ArrayList();
+	//Prendo i pixel dell'immagine e li metto dentro una lista
+	private ArrayList<Pixel> getPixelList() {
+		ArrayList<Pixel> list = new ArrayList<Pixel>();
 
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
@@ -61,14 +60,13 @@ public class Image {
 		return list;
 	}
 
-	// Salva l'immagine dato il nome del file di output
+	//Salva l'immagine dato il nome del file di output
 	public void saveImage(String outputFilePath) {
 		BufferedImage bi = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 
 		int cont = 0;
 
-		// Prendo la lista dei pixel e li organizzo secondo una griglia formata da width
-		// e height
+		//Prendo la lista dei pixel e li organizzo secondo una griglia formata da width e height
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < this.height; j++) {
 				bi.setRGB(i, j, pixelList.get(cont).getRGB(i, j));
@@ -83,24 +81,24 @@ public class Image {
 		}
 	}
 
-	// Cripta il messaggio data una stringa
+	//Cripta il messaggio data una stringa
 	public void encryptMessage(String message) {
-		// Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
-		// L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
+		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
+		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
 		for (int i = 0; i < message.length(); i++) {
 			pixelList.get(i).encryptChar(message.charAt(i));
 		}
-		// Dopo aver criptato l'ultimo carattere, aggiungo il carattere end of text
+		//Dopo aver criptato l'ultimo carattere, aggiungo il carattere end of text
 		pixelList.get(message.length()).encryptETX();
 	}
 
-	// Decripta un eventuale messaggio nascosto.
+	//Decripta un eventuale messaggio nascosto.
 	public String decryptMessage() {
 		// TODO
 		String message = "";
 		char buf;
 
-		// Decripto i pixel della lista, fino a trovare il carattere ETX
+		//Decripto i pixel della lista, fino a trovare il carattere ETX
 		for (int i = 0; i < pixelList.size(); i++) {
 			buf = pixelList.get(i).decrypt();
 			// Se è uguale a ETX esco, altrimenti aggiungo il carattere
