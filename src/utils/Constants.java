@@ -8,4 +8,6 @@ public class Constants {
 	public final static String SECRET_TEXT = Constants.PATH_TO_INPUT+ "secret.txt";
 	public final static String SECRET2_TEXT = Constants.PATH_TO_INPUT+ "secret2.txt";
 	
+	public final static char ETX_ASCII_CHAR = (char) Integer.parseInt("00000011", 2);
+	
 }

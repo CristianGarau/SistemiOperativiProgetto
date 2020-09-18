@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import utils.Constants;
+
 /**
  *  Classe utilizzata per gestire le operazioni riguardanti le immagini
  * @author Garau
@@ -102,6 +104,7 @@ public class Image {
 	 * @param message
 	 */
 	public void encryptMessage(String message) {
+		// TODO da rendere synchronized
 		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
 		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
 		for (int i = 0; i < message.length(); i++) {
@@ -116,7 +119,7 @@ public class Image {
 	 * @return
 	 */
 	public String decryptMessage() {
-		// TODO
+		// TODO da rendere synchronized
 		String message = "";
 		char buf;
 
@@ -124,7 +127,7 @@ public class Image {
 		for (int i = 0; i < pixelList.size(); i++) {
 			buf = pixelList.get(i).decrypt();
 			// Se è uguale a ETX esco, altrimenti aggiungo il carattere
-			if (buf == (char) Integer.parseInt("00000011", 2)) {
+			if (buf == Constants.ETX_ASCII_CHAR) {
 				break;
 			}
 			message += buf;

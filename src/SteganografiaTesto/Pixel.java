@@ -1,5 +1,7 @@
 package SteganografiaTesto;
 
+import utils.Constants;
+
 /**
  * Classe che racchiude il concetto di pixel contiene le informazioni principali, ovvero i
  * valori alpha, red, green e blue.
@@ -132,8 +134,7 @@ public class Pixel {
 
 	// Usata per criptare il carattere ETX
 	public void encryptETX() {
-		int ASCIIvalueForETX = Integer.parseInt("00000011", 2);
-		encryptChar((char) ASCIIvalueForETX); // End of text, ETX
+		encryptChar(Constants.ETX_ASCII_CHAR); // End of text, ETX
 	}
 
 	// Restituisce il valore intero di un pixel, data la sua posizione
