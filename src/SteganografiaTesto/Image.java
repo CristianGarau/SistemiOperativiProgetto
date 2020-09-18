@@ -14,8 +14,8 @@ import javax.imageio.ImageIO;
  */
 
 public class Image {
-	BufferedImage img;
-	File f;
+	private BufferedImage img;
+	private File f;
 	private int width;
 	private int height;
 	private ArrayList<Pixel> pixelList;

@@ -98,14 +98,12 @@ public class Pixel {
 
 	public void encryptChar(char c) {
 		// Cripto un carattere, scrivendo i suoi bit, nei bit meno significativi delle 4
-		// componenti
-		// del pixel, partendo da alpha, poi red, green, blue.
+		// componenti del pixel, partendo da alpha, poi red, green, blue.
 
 		// Converto in codifica binaria il carattere.
 		String bin = Integer.toBinaryString(c);
 
 		char[] buffer;
-		int len = bin.length();
 
 		// Se la codifica è più corta di 8, aggiungo degli zeri.	
 		bin = makeEightBitValue(bin);
