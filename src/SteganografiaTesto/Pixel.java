@@ -1,50 +1,64 @@
 package SteganografiaTesto;
 
+/**
+ * Classe che racchiude il concetto di pixel contiene le informazioni principali, ovvero i
+ * valori alpha, red, green e blue.
+ * 
+ * @author Garau
+ *
+ */
 public class Pixel {
 	// Salvo la codifica binaria dei byte in delle stringhe, semplificandone la
 	// modifica.
 	private String alpha, red, green, blue;
 
 	// Definisco una classe Pixel in modo da semplificare alcune operazioni
-
 	public Pixel(int alpha, int red, int green, int blue) {
 		// Converto l'int in una stringa binaria.
 		// Se la stringa è più corta di 8 bit, aggiungo degli zeri per rendere tutto
-		// della stessa
-		// lunghezza. Ripeto l'operazione per le quattro componenti del pixel.
+		// della stessa lunghezza. 
+		// Ripeto l'operazione per le quattro componenti del pixel.
 		int len;
 
 		this.alpha = Integer.toBinaryString(alpha);
-		len = this.alpha.length();
-		if (len < 8) {
-			for (int i = 0; i < 8 - len; i++) {
-				this.alpha = "0" + this.alpha;
-			}
-		}
+		this.alpha = makeEightBitValue(this.alpha);
 
 		this.red = Integer.toBinaryString(red);
-		len = this.red.length();
-		if (len < 8) {
-			for (int i = 0; i < 8 - len; i++) {
-				this.red = "0" + this.red;
-			}
-		}
-
+		this.red = makeEightBitValue(this.red);
+		
 		this.green = Integer.toBinaryString(green);
-		len = this.green.length();
-		if (len < 8) {
-			for (int i = 0; i < 8 - len; i++) {
-				this.green = "0" + this.green;
-			}
-		}
+		this.green = makeEightBitValue(this.green);
 
 		this.blue = Integer.toBinaryString(blue);
-		len = this.blue.length();
+		this.blue = makeEightBitValue(this.blue);
+	}
+
+	/**
+	 * Metodo ausiliario per il costruttore della classe {@link Pixel}. <br>
+	 * Controlla che la string value sia lunga 8 caratteri, se cosi' non e'
+	 * si procede ad aggiungere degli zeri nelle prime posizioni. <br>
+	 * Utile se value e' un binario scritto come una stringa, risulta quindi facile aggiungere degli zeri
+	 * nelle posizioni piu' significative.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	private String makeEightBitValue(String value) {
+
+		String res = value;
+		int len = value.length();
+		
 		if (len < 8) {
 			for (int i = 0; i < 8 - len; i++) {
-				this.blue = "0" + this.blue;
+				res = "0" + value;
 			}
+		} else if (len > 8) {
+			System.err.println("Errore nel metodo makeEightBitValue, "
+					+ "una stringa è più lunga di 8 caratteri, quindi più lunga di 8 bit");
+			
 		}
+		
+		return res;
 	}
 
 	public char decrypt() {
