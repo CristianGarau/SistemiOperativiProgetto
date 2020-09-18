@@ -18,19 +18,29 @@ public class Pixel {
 		// Se la stringa è più corta di 8 bit, aggiungo degli zeri per rendere tutto
 		// della stessa lunghezza. 
 		// Ripeto l'operazione per le quattro componenti del pixel.
-		int len;
 
 		this.alpha = Integer.toBinaryString(alpha);
 		this.alpha = makeEightBitValue(this.alpha);
+		if(this.alpha.length() < 8)
+			System.out.println("errore");
 
 		this.red = Integer.toBinaryString(red);
 		this.red = makeEightBitValue(this.red);
+		if (this.red.length() < 8) {
+			System.out.println("errore");
+		}
 		
 		this.green = Integer.toBinaryString(green);
 		this.green = makeEightBitValue(this.green);
-
+		if (this.green.length() < 8) {
+			System.out.println("errore");
+		}
+		
 		this.blue = Integer.toBinaryString(blue);
 		this.blue = makeEightBitValue(this.blue);
+		if (this.blue.length() < 8) {
+			System.out.println("errore");
+		}
 	}
 
 	/**
@@ -50,11 +60,13 @@ public class Pixel {
 		
 		if (len < 8) {
 			for (int i = 0; i < 8 - len; i++) {
-				res = "0" + value;
+				value = "0" + value;
 			}
+			res = value;
+			
 		} else if (len > 8) {
 			System.err.println("Errore nel metodo makeEightBitValue, "
-					+ "una stringa è più lunga di 8 caratteri, quindi più lunga di 8 bit");
+					+ "una stringa di bit è più lunga di 8 caratteri, quindi più lunga di 8 bit");
 			
 		}
 		
@@ -95,13 +107,9 @@ public class Pixel {
 		char[] buffer;
 		int len = bin.length();
 
-		// Se la codifica è più corta di 8, aggiungo degli zeri.
-		if (len < 8) {
-			for (int i = 0; i < 8 - len; i++) {
-				bin = "0" + bin;
-			}
-		}
-
+		// Se la codifica è più corta di 8, aggiungo degli zeri.	
+		bin = makeEightBitValue(bin);
+		
 		// Modifico i bit meno significativi (6 e 7), con i bit del carattere.
 		// Mi appoggio su un buffer per semplicità, e poi riconverto in stringa.
 		buffer = alpha.toCharArray();
