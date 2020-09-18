@@ -101,39 +101,39 @@ public class Pixel {
 		// componenti del pixel, partendo da alpha, poi red, green, blue.
 
 		// Converto in codifica binaria il carattere.
-		String bin = Integer.toBinaryString(c);
+		String charToBinary = Integer.toBinaryString(c);
+		// Se la codifica è più corta di 8, aggiungo degli zeri.	
+		charToBinary = makeEightBitValue(charToBinary);
 
 		char[] buffer;
 
-		// Se la codifica è più corta di 8, aggiungo degli zeri.	
-		bin = makeEightBitValue(bin);
-		
 		// Modifico i bit meno significativi (6 e 7), con i bit del carattere.
 		// Mi appoggio su un buffer per semplicità, e poi riconverto in stringa.
 		buffer = alpha.toCharArray();
-		buffer[6] = bin.charAt(0);
-		buffer[7] = bin.charAt(1);
+		buffer[6] = charToBinary.charAt(0);
+		buffer[7] = charToBinary.charAt(1);
 		this.alpha = String.valueOf(buffer);
 
 		buffer = red.toCharArray();
-		buffer[6] = bin.charAt(2);
-		buffer[7] = bin.charAt(3);
+		buffer[6] = charToBinary.charAt(2);
+		buffer[7] = charToBinary.charAt(3);
 		this.red = String.valueOf(buffer);
 
 		buffer = green.toCharArray();
-		buffer[6] = bin.charAt(4);
-		buffer[7] = bin.charAt(5);
+		buffer[6] = charToBinary.charAt(4);
+		buffer[7] = charToBinary.charAt(5);
 		this.green = String.valueOf(buffer);
 
 		buffer = blue.toCharArray();
-		buffer[6] = bin.charAt(6);
-		buffer[7] = bin.charAt(7);
+		buffer[6] = charToBinary.charAt(6);
+		buffer[7] = charToBinary.charAt(7);
 		this.blue = String.valueOf(buffer);
 	}
 
 	// Usata per criptare il carattere ETX
 	public void encryptETX() {
-		encryptChar((char) Integer.parseInt("00000011", 2)); // End of text, ETX
+		int ASCIIvalueForETX = Integer.parseInt("00000011", 2);
+		encryptChar((char) ASCIIvalueForETX); // End of text, ETX
 	}
 
 	// Restituisce il valore intero di un pixel, data la sua posizione
