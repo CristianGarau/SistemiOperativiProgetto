@@ -42,7 +42,7 @@ public class Image {
 	}
 	
 	public ArrayList<Pixel> getPixelList(){
-		ArrayList<Pixel> list = new ArrayList();
+		ArrayList<Pixel> list = new ArrayList<Pixel>();
 		
 		for(int i = 0; i<width; i++) {
 			for(int j = 0; j<height; j++) {
