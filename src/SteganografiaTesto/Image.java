@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-// Classe utilizzata per gestire le operazioni riguardanti le immagini
+/**
+ *  Classe utilizzata per gestire le operazioni riguardanti le immagini
+ * @author Garau
+ *
+ */
 
 public class Image {
 	BufferedImage img;
@@ -31,7 +35,12 @@ public class Image {
 		}
 	}
 
-	//Restituisce un pixel dell'immagine, sottoforma di oggetto Pixel
+	/**
+	 * Restituisce un pixel dell'immagine, sottoforma di oggetto Pixel
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private Pixel getPixel(int x, int y) {
 		
 		int pixelData = img.getRGB(x, y);
@@ -47,7 +56,10 @@ public class Image {
 		return p;
 	}
 
-	//Prendo i pixel dell'immagine e li metto dentro una lista
+	/**
+	 * Prendo i pixel dell'immagine e li metto dentro una lista
+	 * @return
+	 */
 	private ArrayList<Pixel> getPixelList() {
 		ArrayList<Pixel> list = new ArrayList<Pixel>();
 
@@ -60,13 +72,17 @@ public class Image {
 		return list;
 	}
 
-	//Salva l'immagine dato il nome del file di output
+	/**
+	 * Salva l'immagine dato il nome del file di output
+	 * @param outputFilePath
+	 */
 	public void saveImage(String outputFilePath) {
 		BufferedImage bi = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
 
 		int cont = 0;
 
 		//Prendo la lista dei pixel e li organizzo secondo una griglia formata da width e height
+		//viene fatto a colonne, quindi a strisce verticali
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < this.height; j++) {
 				bi.setRGB(i, j, pixelList.get(cont).getRGB(i, j));
@@ -81,7 +97,10 @@ public class Image {
 		}
 	}
 
-	//Cripta il messaggio data una stringa
+	/**
+	 * Cripta il messaggio data una stringa
+	 * @param message
+	 */
 	public void encryptMessage(String message) {
 		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
 		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
@@ -92,7 +111,10 @@ public class Image {
 		pixelList.get(message.length()).encryptETX();
 	}
 
-	//Decripta un eventuale messaggio nascosto.
+	/**
+	 * Decripta un eventuale messaggio nascosto.
+	 * @return
+	 */
 	public String decryptMessage() {
 		// TODO
 		String message = "";
