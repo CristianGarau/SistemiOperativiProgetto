@@ -36,7 +36,16 @@ public class Image {
 			System.out.println(e);
 		}
 	}
-
+	
+	/**
+	 * Metodo da usare per dividere l'immagine in strisce le quali verranno singolarmente
+	 * gestite da thread dedicati
+	 * @return
+	 */
+	private boolean sliptImageIn() {
+		return false;
+	}
+	
 	/**
 	 * Restituisce un pixel dell'immagine, sottoforma di oggetto Pixel
 	 * @param x
