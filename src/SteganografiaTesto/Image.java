@@ -3,7 +3,9 @@ package SteganografiaTesto;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -20,7 +22,7 @@ public class Image {
 	private File f;
 	private int width;
 	private int height;
-	private ArrayList<Pixel> pixelList;
+	private List<Pixel> pixelList;
 
 	public Image(String filePath) {
 		try {
@@ -38,12 +40,34 @@ public class Image {
 	}
 	
 	/**
-	 * Metodo da usare per dividere l'immagine in strisce le quali verranno singolarmente
-	 * gestite da thread dedicati
-	 * @return
+	 * Metodo da usare per dividere l'immagine in 4 colonne, le quali verranno singolarmente
+	 * gestite da thread dedicati.
+	 * 
+	 * @return Una lista di liste, ovvero una lista avente per elemento una lista di pixel
 	 */
-	private boolean sliptImageIn() {
-		return false;
+	private ArrayList<ArrayList<Pixel>> splitImageIn() {
+		ArrayList<ArrayList<Pixel>> sectionList = new ArrayList<ArrayList<Pixel>>();
+		
+		int numSec = 4;
+		int lenPixelList = this.pixelList.size();
+		int remain = lenPixelList % numSec;
+		int lenSec = lenPixelList / numSec;
+		
+		for (int i = 0; i < numSec; i++) {
+			int startingIndex = i*lenSec;
+			int endingIndex = startingIndex + lenSec;
+			
+			if(i == (numSec-1) && remain != 0) {
+				startingIndex = i * lenSec;
+				endingIndex = startingIndex + remain;
+				
+			}
+			// creo un nuovo arraylist cosi' sono sicuro che sara' modificabile
+			ArrayList<Pixel> splittedPixelList = new ArrayList<Pixel>(this.pixelList.subList(startingIndex, endingIndex));
+			sectionList.add(splittedPixelList);
+		}
+		
+		return sectionList;
 	}
 	
 	/**
@@ -71,7 +95,8 @@ public class Image {
 	 * Prendo i pixel dell'immagine e li metto dentro una lista
 	 * @return
 	 */
-	private ArrayList<Pixel> getPixelList() {
+	private List<Pixel> getPixelList() {
+		// TODO aggiungere metodo per suddivisione in 4 parti
 		ArrayList<Pixel> list = new ArrayList<Pixel>();
 
 		for (int i = 0; i < width; i++) {
@@ -109,11 +134,25 @@ public class Image {
 	}
 
 	/**
-	 * Cripta il messaggio data una stringa
+	 * Cripta il messaggio data una stringa. Non supporta il multithread.
 	 * @param message
 	 */
 	public void encryptMessage(String message) {
-		// TODO da rendere synchronized
+		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
+		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
+		for (int i = 0; i < message.length(); i++) {
+			pixelList.get(i).encryptChar(message.charAt(i));
+		}
+		//Dopo aver criptato l'ultimo carattere, aggiungo il carattere end of text
+		pixelList.get(message.length()).encryptETX();
+	}
+	
+	/**
+	 * Cripta il messaggio data una stringa. Supporta il multithread.
+	 * 
+	 * @param message
+	 */
+	public static void encryptMessage(String message, List<Pixel> pixelList) {
 		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
 		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
 		for (int i = 0; i < message.length(); i++) {
