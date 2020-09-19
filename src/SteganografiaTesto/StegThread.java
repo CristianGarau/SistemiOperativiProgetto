@@ -25,9 +25,16 @@ public class StegThread extends Thread {
 	@Override
 	public void run() {
 		
-		Image.encryptMessage(message, pixelList);
-			
+		pixelList = Image.encryptMessage(message, pixelList);
 		
+	}
+	
+	public List<Pixel> getPixelList() {
+		return pixelList;
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 
 }
