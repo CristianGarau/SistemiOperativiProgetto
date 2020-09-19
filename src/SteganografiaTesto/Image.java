@@ -5,9 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import utils.Constants;
 
@@ -45,8 +47,8 @@ public class Image {
 	 * 
 	 * @return Una lista di liste, ovvero una lista avente per elemento una lista di pixel
 	 */
-	public ArrayList<ArrayList<Pixel>> splitImageIn() {
-		ArrayList<ArrayList<Pixel>> sectionList = new ArrayList<ArrayList<Pixel>>();
+	public List<List<Pixel>> splitImageIn() {
+		List<List<Pixel>> sectionList = new ArrayList<List<Pixel>>();
 		
 		int numSec = 4;
 		int lenPixelList = pixelList.size();
@@ -70,6 +72,29 @@ public class Image {
 		}
 		
 		return sectionList;
+	}
+	
+	public List<String> splitMessage(String message) {
+		List<String> pieceOfMessage = new ArrayList<String>();
+		
+		int numOfPiece = 4;
+		int lenMess = message.length();
+		int remain = lenMess % 4;
+		
+		for (int i = 0; i < numOfPiece; i++) {
+			int startingIndex = i*numOfPiece;
+			int endingIndex = startingIndex + numOfPiece;
+			
+			if(i == (numOfPiece - 1) && remain != 0) {
+				startingIndex = i * numOfPiece;
+				// il +1 serve perche' nel metodo delle stringe l'ultimo index e' escluso
+				endingIndex = startingIndex + remain + 1;
+			}
+			pieceOfMessage.add(message.substring(startingIndex, endingIndex));
+		}
+	
+		return pieceOfMessage;
+	
 	}
 	
 	/**
@@ -140,6 +165,10 @@ public class Image {
 	 * @param message
 	 */
 	public void encryptMessage(String message) {
+		if(!isEncryptable(message, pixelList)) {
+			System.err.println("C'è un problema, il messaggio che si sta cercando di codificare è troppo lungo");
+			throw new IllegalArgumentException();
+		}
 		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
 		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
 		for (int i = 0; i < message.length(); i++) {
@@ -155,6 +184,11 @@ public class Image {
 	 * @param message
 	 */
 	public static void encryptMessage(String message, List<Pixel> pixelList) {
+
+		if(!isEncryptable(message, pixelList)) {
+			System.err.println("C'è un problema, il messaggio che si sta cercando di codificare è troppo lungo");
+			throw new IllegalArgumentException();
+		}
 		//Faccio un ciclo sulla stringa, in modo da criptare un carattere alla volta
 		//L'n-esimo carattere corrisponde all'n-esimo pixel nella lista
 		for (int i = 0; i < message.length(); i++) {
@@ -162,6 +196,23 @@ public class Image {
 		}
 		//Dopo aver criptato l'ultimo carattere, aggiungo il carattere end of text
 		pixelList.get(message.length()).encryptETX();
+	}
+	
+	/**
+	 * Metodo ausiliario, serve a dire se il messaggio passato fra i parametri si riesce a cryptare 
+	 * all'interno della pixelList nei parametri
+	 * @param message
+	 * @param pixelsAvailable
+	 * @return true se cryptabile, false altrimenti
+	 */
+	private static boolean isEncryptable(String message, List<Pixel> pixelsAvailable) {
+		boolean isEncryptable = false;
+		
+		if (message.length() <= pixelsAvailable.size()) {
+			isEncryptable = true;
+		}
+			
+		return isEncryptable;
 	}
 
 	/**

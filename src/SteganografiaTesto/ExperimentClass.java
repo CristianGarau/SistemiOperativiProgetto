@@ -1,6 +1,7 @@
 package SteganografiaTesto;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utils.Constants;
 
@@ -15,8 +16,13 @@ public class ExperimentClass {
 
 		Image img = new Image(Constants.DOG_IMAGE);
 		
-		ArrayList<ArrayList<Pixel>> sectionedImage = img.splitImageIn();
+		List<List<Pixel>> sectionedImage = img.splitImageIn();
 		
+		String message = "Ciao, sto provando il metodo di split del testo";
+		List<String> pieceOfMessage = img.splitMessage(message);
+		
+		
+		//StegThread thread1 =new StegThread(message, pixelList);
 		
 		
 	}
