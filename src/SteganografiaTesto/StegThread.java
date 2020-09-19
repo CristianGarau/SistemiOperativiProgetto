@@ -16,17 +16,12 @@ public class StegThread extends Thread {
 		this.pixelList = pixelList;
 		this.message = message;
 	}
-	
-	@Override
-	public synchronized void start() {
-		run();
-	}
 
 	@Override
 	public void run() {
-		
+		System.out.println(getId() + " inizio");
 		pixelList = Image.encryptMessage(message, pixelList);
-		System.out.println(getId());
+		System.out.println(getId() + " fine");
 	}
 	
 	public List<Pixel> getPixelList() {
