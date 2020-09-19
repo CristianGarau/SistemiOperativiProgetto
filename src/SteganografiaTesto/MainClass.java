@@ -13,11 +13,11 @@ public class MainClass {
 		String testo = fileHandler.readTxtToString(Constants.SECRET2_TEXT);
 //		String testo = "Sono un gattino";
 		Image image = new Image(Constants.PATH_TO_INPUT+"gatto.png");
-		long startTime = System.nanoTime();
+		long startTime = System.currentTimeMillis();
 		image.encryptMessage(testo);
-		long endTime   = System.nanoTime();
+		long endTime   = System.currentTimeMillis();
 		long totalTime = endTime - startTime;
-		System.out.println("Tempo di esecuzione necessario alla crittazione: " + totalTime);
+		System.out.println("Tempo di esecuzione necessario alla crittazione: " + totalTime/1000.0);
 		
 		image.saveImage(Constants.PATH_TO_OUTPUT+"gattoCriptato.png");
 		System.out.println();
@@ -25,13 +25,13 @@ public class MainClass {
 		
 		// Decripto l'immagine e stampo il risultato.
 		Image dec = new Image(Constants.PATH_TO_OUTPUT+"gattoCriptato.png");
-		startTime = System.nanoTime();
+		startTime = System.currentTimeMillis();
 		String decMessage = dec.decryptMessage();
-		endTime   = System.nanoTime();
+		endTime   = System.currentTimeMillis();
 		totalTime = endTime - startTime;
 		
 		System.out.println(decMessage);
-		System.out.println("Tempo di esecuzione necessario alla decrittazione: " + totalTime);
+		System.out.println("Tempo di esecuzione necessario alla decrittazione: " + totalTime/1000.0);
 		
 
 	}
