@@ -49,7 +49,7 @@ public class Image {
 		ArrayList<ArrayList<Pixel>> sectionList = new ArrayList<ArrayList<Pixel>>();
 		
 		int numSec = 4;
-		int lenPixelList = this.pixelList.size();
+		int lenPixelList = pixelList.size();
 		int remain = lenPixelList % numSec;
 		int lenSec = lenPixelList / numSec;
 		
@@ -63,7 +63,7 @@ public class Image {
 				
 			}
 			// creo un nuovo arraylist cosi' sono sicuro che sara' modificabile
-			ArrayList<Pixel> splittedPixelList = new ArrayList<Pixel>(this.pixelList.subList(startingIndex, endingIndex));
+			ArrayList<Pixel> splittedPixelList = new ArrayList<Pixel>(pixelList.subList(startingIndex, endingIndex));
 			sectionList.add(splittedPixelList);
 		}
 		
