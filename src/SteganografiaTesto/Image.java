@@ -75,8 +75,8 @@ public class Image {
 		
 		int numOfPiece = 4;
 		int lenMess = message.length() ;
-		int remain = lenMess % (numOfPiece - 1);
-		int lenPiece = lenMess / (numOfPiece - 1);
+		int remain = lenMess % numOfPiece;
+		int lenPiece = lenMess / numOfPiece;
 		
 		for (int i = 0; i < numOfPiece; i++) {
 			int startingIndex = i*lenPiece;

@@ -26,7 +26,7 @@ public class StegThread extends Thread {
 	public void run() {
 		
 		pixelList = Image.encryptMessage(message, pixelList);
-		
+		System.out.println(getId());
 	}
 	
 	public List<Pixel> getPixelList() {

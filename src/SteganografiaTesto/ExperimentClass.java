@@ -3,6 +3,7 @@ package SteganografiaTesto;
 import java.util.List;
 
 import utils.Constants;
+import utils.FileHandler;
 
 /**
  * Classe da usare per fare esperimenti, per provare cose
@@ -14,22 +15,17 @@ public class ExperimentClass {
 	public static void main(String[] args) {
 
 		Image img = new Image(Constants.DOG_IMAGE);
+		FileHandler fileHandler = FileHandler.getInstance();
 		
 		List<List<Pixel>> sectionedImage = img.splitImageIn();
-		String message = "Ciao, sto provando il metodo di split del testo";
+//		String message = "Ciao, sto provando il metodo di split del testo";
+		String message = fileHandler.readTxtToString(Constants.SECRET_TEXT);
 		List<String> pieceOfMessage = img.splitMessage(message);
 		
 		StegThread thread1 = new StegThread(pieceOfMessage.get(0), sectionedImage.get(0));
 		StegThread thread2 = new StegThread(pieceOfMessage.get(1), sectionedImage.get(1));
 		StegThread thread3 = new StegThread(pieceOfMessage.get(2), sectionedImage.get(2));
 		StegThread thread4 = new StegThread(pieceOfMessage.get(3), sectionedImage.get(3));
-
-		System.out.println(img.getPixelList().size());
-		System.out.println(sectionedImage.get(0).size());
-		System.out.println(sectionedImage.get(1).size());
-		System.out.println(sectionedImage.get(2).size());
-		System.out.println(sectionedImage.get(3).size());
-		
 
 		thread1.start();
 		thread2.start();
