@@ -3,13 +3,10 @@ package SteganografiaTesto;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
 
 import utils.Constants;
 
@@ -59,8 +56,10 @@ public class Image {
 			int startingIndex = i*lenSec;
 			int endingIndex = startingIndex + lenSec;
 			
+			// se il numero di pixel non è divisibile per 4 allora
+			// all'ora all'ultimo giro non aggiungo solo il resto, 
+			// non tutto lenSec
 			if(i == (numSec-1) && remain != 0) {
-				startingIndex = i * lenSec;
 				endingIndex = startingIndex + remain;
 				
 			}
@@ -80,13 +79,16 @@ public class Image {
 		int numOfPiece = 4;
 		int lenMess = message.length();
 		int remain = lenMess % 4;
+		int lenPiece = lenMess % 4;
 		
 		for (int i = 0; i < numOfPiece; i++) {
-			int startingIndex = i*numOfPiece;
-			int endingIndex = startingIndex + numOfPiece;
-			
+			int startingIndex = i*lenPiece;
+			int endingIndex = startingIndex + lenPiece;
+		
+			// se il numero di pixel non è divisibile per 4 allora
+			// all'ora all'ultimo giro non aggiungo solo il resto, 
+			// non tutto lenMess
 			if(i == (numOfPiece - 1) && remain != 0) {
-				startingIndex = i * numOfPiece;
 				// il +1 serve perche' nel metodo delle stringe l'ultimo index e' escluso
 				endingIndex = startingIndex + remain + 1;
 			}
