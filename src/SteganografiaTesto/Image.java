@@ -182,8 +182,9 @@ public class Image {
 	 * Cripta il messaggio data una stringa. Supporta il multithread.
 	 * 
 	 * @param message
+	 * @return the pixel list with the message encrypted inside
 	 */
-	public static void encryptMessage(String message, List<Pixel> pixelList) {
+	public static List<Pixel> encryptMessage(String message, List<Pixel> pixelList) {
 
 		if(!isEncryptable(message, pixelList)) {
 			System.err.println("C'è un problema, il messaggio che si sta cercando di codificare è troppo lungo");
@@ -196,7 +197,9 @@ public class Image {
 		}
 		//Dopo aver criptato l'ultimo carattere, aggiungo il carattere end of text
 		pixelList.get(message.length()).encryptETX();
+		return pixelList;
 	}
+	
 	
 	/**
 	 * Metodo ausiliario, serve a dire se il messaggio passato fra i parametri si riesce a cryptare 
@@ -220,7 +223,7 @@ public class Image {
 	 * @return
 	 */
 	public String decryptMessage() {
-		// TODO da rendere synchronized
+		
 		String message = "";
 		char buf;
 
@@ -234,6 +237,29 @@ public class Image {
 			message += buf;
 		}
 		return message;
+	}
+	
+	/**
+	 * Metodo per decriptare un messaggio che era stato criptato con l'algoritmo usato da {@link Image#encryptMessage(String, List)}}a partire dalla 
+	 * @param pixelList
+	 * @return
+	 */
+	public static String decryptMessage(List<Pixel> pixelList) {
+		
+		String message = "";
+		char buf;
+
+		//Decripto i pixel della lista, fino a trovare il carattere ETX
+		for (int i = 0; i < pixelList.size(); i++) {
+			buf = pixelList.get(i).decrypt();
+			// Se è uguale a ETX esco, altrimenti aggiungo il carattere
+			if (buf == Constants.ETX_ASCII_CHAR) {
+				break;
+			}
+			message += buf;
+		}
+		return message;	
+		
 	}
 
 	public int getWidth() {
