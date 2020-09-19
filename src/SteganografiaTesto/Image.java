@@ -45,7 +45,7 @@ public class Image {
 	 * 
 	 * @return Una lista di liste, ovvero una lista avente per elemento una lista di pixel
 	 */
-	private ArrayList<ArrayList<Pixel>> splitImageIn() {
+	public ArrayList<ArrayList<Pixel>> splitImageIn() {
 		ArrayList<ArrayList<Pixel>> sectionList = new ArrayList<ArrayList<Pixel>>();
 		
 		int numSec = 4;
@@ -62,7 +62,9 @@ public class Image {
 				endingIndex = startingIndex + remain;
 				
 			}
-			// creo un nuovo arraylist cosi' sono sicuro che sara' modificabile
+			// creo un nuovo arraylist cosi' la subList risulta modificabile
+			// se non facessi in questo modo e prendessi solo la subList mi ritroverei con
+			// una view, quindi una lista NON modificabile
 			ArrayList<Pixel> splittedPixelList = new ArrayList<Pixel>(pixelList.subList(startingIndex, endingIndex));
 			sectionList.add(splittedPixelList);
 		}
@@ -96,7 +98,7 @@ public class Image {
 	 * @return
 	 */
 	private List<Pixel> getPixelList() {
-		// TODO aggiungere metodo per suddivisione in 4 parti
+
 		ArrayList<Pixel> list = new ArrayList<Pixel>();
 
 		for (int i = 0; i < width; i++) {
