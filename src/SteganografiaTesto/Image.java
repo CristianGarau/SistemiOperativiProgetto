@@ -55,14 +55,11 @@ public class Image {
 		for (int i = 0; i < numSec; i++) {
 			int startingIndex = i*lenSec;
 			int endingIndex = startingIndex + lenSec;
-			
-			// se il numero di pixel non è divisibile per 4 allora
-			// all'ora all'ultimo giro non aggiungo solo il resto, 
-			// non tutto lenSec
-			if(i == (numSec-1) && remain != 0) {
-				endingIndex = startingIndex + remain;
-				
+			if(remain != 0) {
+				endingIndex += 1;
+				remain--;
 			}
+			
 			// creo un nuovo arraylist cosi' la subList risulta modificabile
 			// se non facessi in questo modo e prendessi solo la subList mi ritroverei con
 			// una view, quindi una lista NON modificabile
@@ -77,9 +74,9 @@ public class Image {
 		List<String> pieceOfMessage = new ArrayList<String>();
 		
 		int numOfPiece = 4;
-		int lenMess = message.length();
-		int remain = lenMess % 4;
-		int lenPiece = lenMess % 4;
+		int lenMess = message.length() ;
+		int remain = lenMess % (numOfPiece - 1);
+		int lenPiece = lenMess / (numOfPiece - 1);
 		
 		for (int i = 0; i < numOfPiece; i++) {
 			int startingIndex = i*lenPiece;
@@ -89,8 +86,7 @@ public class Image {
 			// all'ora all'ultimo giro non aggiungo solo il resto, 
 			// non tutto lenMess
 			if(i == (numOfPiece - 1) && remain != 0) {
-				// il +1 serve perche' nel metodo delle stringe l'ultimo index e' escluso
-				endingIndex = startingIndex + remain + 1;
+				endingIndex = startingIndex + remain;
 			}
 			pieceOfMessage.add(message.substring(startingIndex, endingIndex));
 		}
@@ -124,7 +120,7 @@ public class Image {
 	 * Prendo i pixel dell'immagine e li metto dentro una lista
 	 * @return
 	 */
-	private List<Pixel> getPixelList() {
+	public List<Pixel> getPixelList() {
 
 		ArrayList<Pixel> list = new ArrayList<Pixel>();
 
@@ -280,4 +276,5 @@ public class Image {
 		this.height = height;
 	}
 
+  
 }

@@ -16,15 +16,21 @@ public class ExperimentClass {
 		Image img = new Image(Constants.DOG_IMAGE);
 		
 		List<List<Pixel>> sectionedImage = img.splitImageIn();
-		
 		String message = "Ciao, sto provando il metodo di split del testo";
 		List<String> pieceOfMessage = img.splitMessage(message);
 		
-		StegThread thread1 =new StegThread(pieceOfMessage.get(0), sectionedImage.get(0));
-		StegThread thread2 =new StegThread(pieceOfMessage.get(1), sectionedImage.get(1));
-		StegThread thread3 =new StegThread(pieceOfMessage.get(2), sectionedImage.get(2));
-		StegThread thread4 =new StegThread(pieceOfMessage.get(3), sectionedImage.get(3));
+		StegThread thread1 = new StegThread(pieceOfMessage.get(0), sectionedImage.get(0));
+		StegThread thread2 = new StegThread(pieceOfMessage.get(1), sectionedImage.get(1));
+		StegThread thread3 = new StegThread(pieceOfMessage.get(2), sectionedImage.get(2));
+		StegThread thread4 = new StegThread(pieceOfMessage.get(3), sectionedImage.get(3));
+
+		System.out.println(img.getPixelList().size());
+		System.out.println(sectionedImage.get(0).size());
+		System.out.println(sectionedImage.get(1).size());
+		System.out.println(sectionedImage.get(2).size());
+		System.out.println(sectionedImage.get(3).size());
 		
+
 		thread1.start();
 		thread2.start();
 		thread3.start();
@@ -35,7 +41,7 @@ public class ExperimentClass {
 		String piece3 = Image.decryptMessage(thread3.getPixelList());
 		String piece4 = Image.decryptMessage(thread4.getPixelList());
 		
-		
+		System.out.println(piece1+piece2+piece3+piece4);
 	}
 
 }
