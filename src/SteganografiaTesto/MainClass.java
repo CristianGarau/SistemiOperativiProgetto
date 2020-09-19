@@ -12,7 +12,7 @@ public class MainClass {
 //		String testo = fileHandler.readTxtToString(Constants.SECRET_TEXT);
 		String testo = fileHandler.readTxtToString(Constants.SECRET2_TEXT);
 //		String testo = "Sono un gattino";
-		Image image = new Image(Constants.PATH_TO_INPUT+"gatto.png");
+		Image image = new Image(Constants.CAT_IMAGE);
 		long startTime = System.currentTimeMillis();
 		image.encryptMessage(testo);
 		long endTime   = System.currentTimeMillis();
