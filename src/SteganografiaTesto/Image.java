@@ -74,9 +74,12 @@ public class Image {
 		List<String> pieceOfMessage = new ArrayList<String>();
 		
 		int numOfPiece = 4;
-		int lenMess = message.length() ;
-		int remain = lenMess % numOfPiece;
+		int lenMess = message.length();
+		System.out.println("Lunghezza testo " + lenMess);
+		System.out.println();
 		int lenPiece = lenMess / numOfPiece;
+		System.out.println("Lunghezza pezzo");
+		int remain = lenMess % numOfPiece;
 		
 		for (int i = 0; i < numOfPiece; i++) {
 			int startingIndex = i*lenPiece;
@@ -86,8 +89,11 @@ public class Image {
 			// all'ora all'ultimo giro non aggiungo solo il resto, 
 			// non tutto lenMess
 			if(i == (numOfPiece - 1) && remain != 0) {
-				endingIndex = startingIndex + remain;
+				endingIndex = startingIndex + lenPiece + remain;
 			}
+			System.out.println("Starting "+ startingIndex);
+			System.out.println("Ending "+ endingIndex);
+			System.out.println();
 			pieceOfMessage.add(message.substring(startingIndex, endingIndex));
 		}
 	
