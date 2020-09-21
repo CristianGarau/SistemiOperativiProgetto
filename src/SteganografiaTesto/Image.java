@@ -55,9 +55,9 @@ public class Image {
 		for (int i = 0; i < numSec; i++) {
 			int startingIndex = i*lenSec;
 			int endingIndex = startingIndex + lenSec;
-			if(remain != 0) {
-				endingIndex += 1;
-				remain--;
+			
+			if(i == (numSec - 1) && remain != 0) {
+				endingIndex += remain + lenSec;
 			}
 			
 			// creo un nuovo arraylist cosi' la subList risulta modificabile
@@ -91,9 +91,6 @@ public class Image {
 			if(i == (numOfPiece - 1) && remain != 0) {
 				endingIndex = startingIndex + lenPiece + remain;
 			}
-			System.out.println("Starting "+ startingIndex);
-			System.out.println("Ending "+ endingIndex);
-			System.out.println();
 			pieceOfMessage.add(message.substring(startingIndex, endingIndex));
 		}
 	
