@@ -249,7 +249,7 @@ public class Image {
 	
 	
 	/**
-	 * Metodo ausiliario, serve a dire se il messaggio passato fra i parametri si riesce a cryptare 
+	 * Metodo ausiliario, serve a dire se il messaggio passato fra i parametri si riesce a criptare 
 	 * all'interno della pixelList nei parametri
 	 * @param message
 	 * @param pixelsAvailable
