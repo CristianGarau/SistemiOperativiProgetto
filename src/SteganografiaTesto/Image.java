@@ -38,6 +38,12 @@ public class Image {
 		}
 	}
 	
+	public Image(int width, int heigh, List<Pixel> pixelList) {
+		this.width = width;
+		this.height = heigh;
+		this.pixelList = pixelList;
+	}
+	
 	/**
 	 * Metodo da usare per dividere l'immagine in 4 colonne, le quali verranno singolarmente
 	 * gestite da thread dedicati.
@@ -63,11 +69,27 @@ public class Image {
 			// creo un nuovo arraylist cosi' la subList risulta modificabile
 			// se non facessi in questo modo e prendessi solo la subList mi ritroverei con
 			// una view, quindi una lista NON modificabile
-			ArrayList<Pixel> splittedPixelList = new ArrayList<Pixel>(pixelList.subList(startingIndex, endingIndex));
+			List<Pixel> splittedPixelList = new ArrayList<Pixel>(pixelList.subList(startingIndex, endingIndex));
+			
 			sectionList.add(splittedPixelList);
 		}
 		
 		return sectionList;
+	}
+	
+	/**
+	 * Metodo che serve per combinare più liste di pixel in una immagine sola. Oltretutto la salva 
+	 * nel path dato come parametro
+	 * @param pieceOfImage
+	 */
+	public static void composeImage(List<List<Pixel>> pieceOfImage, String outputFilePath, int width, int height) {
+		List<Pixel> combinedImage = new ArrayList<Pixel>();
+		
+		for (List<Pixel> elem : pieceOfImage) {
+			combinedImage.addAll(elem);
+		}
+		
+		Image.saveImage(combinedImage, outputFilePath, width, height);
 	}
 	
 	public List<String> splitMessage(String message) {
@@ -75,10 +97,7 @@ public class Image {
 		
 		int numOfPiece = 4;
 		int lenMess = message.length();
-		System.out.println("Lunghezza testo " + lenMess);
-		System.out.println();
 		int lenPiece = lenMess / numOfPiece;
-		System.out.println("Lunghezza pezzo");
 		int remain = lenMess % numOfPiece;
 		
 		for (int i = 0; i < numOfPiece; i++) {
@@ -149,6 +168,33 @@ public class Image {
 		//viene fatto a colonne, quindi a strisce verticali
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < this.height; j++) {
+				bi.setRGB(i, j, pixelList.get(cont).getRGB(i, j));
+				cont++;
+			}
+		}
+
+		try {
+			ImageIO.write(bi, "png", new File(outputFilePath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Salva un'immagine data una lista di pixel, altezza e larghezza della foto
+	 * @param pixelList
+	 * @param outputFilePath
+	 */
+	public static void saveImage(List<Pixel> pixelList, String outputFilePath, int width, int height) {
+		
+		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+		int cont = 0;
+
+		//Prendo la lista dei pixel e li organizzo secondo una griglia formata da width e height
+		//viene fatto a colonne, quindi a strisce verticali
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				bi.setRGB(i, j, pixelList.get(cont).getRGB(i, j));
 				cont++;
 			}

@@ -3,7 +3,7 @@ package SteganografiaTesto;
 import java.util.List;
 
 /**
- * 
+ * Thread dedicato alla crittazione di un messaggio all'interno di una lista di {@link Pixel}
  * @author Andrea, Garau
  *
  */
@@ -19,9 +19,9 @@ public class StegThread extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println(getId() + " inizio");
+//		System.out.println(getId() + " inizio");
 		pixelList = Image.encryptMessage(message, pixelList);
-		System.out.println(getId() + " fine");
+//		System.out.println(getId() + " fine");
 	}
 	
 	public List<Pixel> getPixelList() {
