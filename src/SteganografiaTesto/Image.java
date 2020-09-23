@@ -247,6 +247,20 @@ public class Image {
 		return pixelList;
 	}
 	
+	public String decryptMessageMultiThread() {
+		String res = null;
+		StringBuilder sb = new StringBuilder();
+		
+		List<List<Pixel>> splittedImage = this.splitImageIn();
+
+		for (List<Pixel> elem : splittedImage) {
+			String pieceOfMessage = Image.decryptMessage(elem);
+			sb.append(pieceOfMessage);
+		}
+		res = sb.toString();
+		return res;
+	}
+	
 	
 	/**
 	 * Metodo ausiliario, serve a dire se il messaggio passato fra i parametri si riesce a criptare 

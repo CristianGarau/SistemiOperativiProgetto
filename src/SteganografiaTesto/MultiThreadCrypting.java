@@ -1,6 +1,5 @@
 package SteganografiaTesto;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import utils.Constants;
@@ -21,7 +20,7 @@ public class MultiThreadCrypting {
 
 		List<List<Pixel>> sectionedImage = img.splitImageIn();
 		// String message = "Ciao, sto provando il metodo di split del testo";
-		String message = fileHandler.readTxtToString(Constants.SECRET2_TEXT);
+		String message = fileHandler.readTxtToString(Constants.SECRET_TEXT);
 		List<String> pieceOfMessage = img.splitMessage(message);
 
 		StegThread thread1 = new StegThread(pieceOfMessage.get(0), sectionedImage.get(0));
@@ -40,31 +39,19 @@ public class MultiThreadCrypting {
 			thread3.join();
 			thread4.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
 		//Salvo la nuova immagine con i pixel modificati
-		List<Pixel> toSave = new ArrayList<Pixel>();
-		toSave = thread1.getPixelList();
-		toSave.addAll(thread2.getPixelList());
-		toSave.addAll(thread3.getPixelList());
-		toSave.addAll(thread4.getPixelList());
-		Image.saveImage(toSave, Constants.PATH_TO_OUTPUT + "caneCriptato.png", img.getWidth(), img.getHeight());
-		
-		//Ricostruisco la stringa, concatenando i vari pezzi
-		String piece1 = Image.decryptMessage(thread1.getPixelList());
-		String piece2 = Image.decryptMessage(thread2.getPixelList());
-		String piece3 = Image.decryptMessage(thread3.getPixelList());
-		String piece4 = Image.decryptMessage(thread4.getPixelList());
+		Image.composeImage(sectionedImage, Constants.PATH_TO_OUTPUT + "caneCriptato.png", img.getWidth(), img.getHeight());
 
+		//Ricostruisco la stringa, concatenando i vari pezzi
+
+		Image cryptedImg = new Image(Constants.PATH_TO_OUTPUT + "caneCriptato.png");
 		
-		System.out.println("Prima parte: " + piece1 + "\n");
-		System.out.println("Seconda parte: " + piece2 + "\n");
-		System.out.println("Terza parte: " + piece3 + "\n");
-		System.out.println("Quarta parte: " + piece4 + "\n");
-		// System.out.println(piece1+piece2+piece3+piece4);
+		String res = cryptedImg.decryptMessageMultiThread();
+		System.out.println(res);
 	}
 
 }
