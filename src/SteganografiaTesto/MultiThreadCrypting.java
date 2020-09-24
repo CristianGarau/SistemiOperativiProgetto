@@ -47,7 +47,6 @@ public class MultiThreadCrypting {
 		Image.composeImage(sectionedImage, Constants.PATH_TO_OUTPUT + "caneCriptato.png", img.getWidth(), img.getHeight());
 
 		//Ricostruisco la stringa, concatenando i vari pezzi
-
 		Image cryptedImg = new Image(Constants.PATH_TO_OUTPUT + "caneCriptato.png");
 		
 		String res = cryptedImg.decryptMessageMultiThread();
